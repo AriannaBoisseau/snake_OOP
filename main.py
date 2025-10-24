@@ -10,6 +10,7 @@ import Square
 
 import curses
 import time
+import random
 
 ascii_art = """
         _________              __            
@@ -22,10 +23,21 @@ ascii_art = """
 
 def main(stdscr):
 
-    # objects initialization
-    board = Board.Board()
-    snake = Snake.Snake()
-    apple1 = Apple.Apple(position=Position.Position(7, 7))
+    # # objects initialization
+    # board = Board.Board()
+    # snake = Snake.Snake()
+    # # iterate on all square of the board and create a list of empty squares
+    # empty_squares = []
+    # for x in range(board.width):
+    #     for y in range(board.height):
+    #         pos = Position.Position(x, y)
+    #         if board.grid[x][y].value == SquareValue.Square_value.EMPTY:
+    #             empty_squares.append(pos)
+
+    # place an apple randomly on an empty square
+    # apple_position = empty_squares[random.randint(0, len(empty_squares))]
+    # apple = Apple.Apple(position=apple_position)
+    # board.set_square_value(apple.position, SquareValue.Square_value.FOOD)
     
     # terminal printing
     stdscr.clear()
@@ -33,8 +45,12 @@ def main(stdscr):
     curses.curs_set(0)  # Hide cursor
     stdscr.nodelay(True)  # Non-blocking input
     stdscr.timeout(100)  # Refresh every 100ms
+
+    game = Game.Game()
+
+    game.run()
     
-    direction = snake.direction  # Initialize direction
+    direction = game.snake.direction  # Initialize direction
 
     while True:
         stdscr.clear()
@@ -43,16 +59,16 @@ def main(stdscr):
         stdscr.addstr(0, 2, ascii_art)
         stdscr.addstr(0, 2, '~ Welcome to Snake ~ Press "q" to quit the game ~')
 
-        for piece in snake.body:
-            if piece == snake.body[0]:
-                board.set_square_value(piece, SquareValue.Square_value.HEAD) 
+        for piece in game.snake.body:
+            if piece == game.snake.body[0]:
+                game.board.set_square_value(piece, SquareValue.Square_value.HEAD) 
             else:
-                board.set_square_value(piece, SquareValue.Square_value.SNAKE)
+                game.board.set_square_value(piece, SquareValue.Square_value.SNAKE)
 
         # Draw board
-        for x in range(board.width):
-            for y in range(board.height):
-                square = board.grid[x][y]
+        for x in range(game.board.width):
+            for y in range(game.board.height):
+                square = game.board.grid[x][y]
                 if square.value == SquareValue.Square_value.BORDER:
                     char = '█'
                 elif square.value == SquareValue.Square_value.SNAKE:
@@ -81,15 +97,15 @@ def main(stdscr):
             break
 
         # update snake
-        snake.direction = direction
-        snake.move()
+        game.snake.direction = direction
+        game.snake.move()
 
         # update empty squares
-        for x in range(board.width):
-            for y in range(board.height):
+        for x in range(game.board.width):
+            for y in range(game.board.height):
                 pos = Position.Position(x, y)
-                if pos not in snake.body and board.grid[x][y].value != SquareValue.Square_value.BORDER:
-                    board.set_square_value(pos, SquareValue.Square_value.EMPTY)
+                if pos not in game.snake.body and game.board.grid[x][y].value == SquareValue.Square_value.SNAKE:
+                    game.board.set_square_value(pos, SquareValue.Square_value.EMPTY)
 
         
         # update terminal

@@ -19,3 +19,6 @@ class Board:
     def set_square_value(self, position: Position.Position, value: SquareValue.Square_value):
         if 0 <= position.x < self.width and 0 <= position.y < self.height:
             self.grid[position.x][position.y].value = value
+
+    # def get_square_value(self, position: Position.Position):
+    #     print(self.)
