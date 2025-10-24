@@ -1,7 +1,7 @@
 import Position
-import Square_value
+import SquareValue
 
 class Square:
-    def __init__(self, position = Position.Position(), value = Square_value.Square_value.EMPTY):
+    def __init__(self, position = Position.Position(0, 0), value = SquareValue.Square_value.EMPTY):
         self.position = position
         self.value = value
