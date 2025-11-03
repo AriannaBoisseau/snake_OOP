@@ -23,23 +23,6 @@ ascii_art = """
 
 def main(stdscr):
 
-    # # objects initialization
-    # board = Board.Board()
-    # snake = Snake.Snake()
-    # # iterate on all square of the board and create a list of empty squares
-    # empty_squares = []
-    # for x in range(board.width):
-    #     for y in range(board.height):
-    #         pos = Position.Position(x, y)
-    #         if board.grid[x][y].value == SquareValue.Square_value.EMPTY:
-    #             empty_squares.append(pos)
-
-    # place an apple randomly on an empty square
-    # apple_position = empty_squares[random.randint(0, len(empty_squares))]
-    # apple = Apple.Apple(position=apple_position)
-    # board.set_square_value(apple.position, SquareValue.Square_value.FOOD)
-    
-    # terminal printing
     stdscr.clear()
 
     curses.curs_set(0)  # Hide cursor
@@ -53,12 +36,32 @@ def main(stdscr):
     direction = game.snake.direction  # Initialize direction
 
     while True:
-        stdscr.clear()
+        # stdscr.clear()
 
         stdscr.border(0)
         stdscr.addstr(0, 2, ascii_art)
         stdscr.addstr(0, 2, '~ Welcome to Snake ~ Press "q" to quit the game ~')
+        stdscr.addstr(8, 2, "Points: {}".format(game.points))
 
+        # Handle input
+        key = stdscr.getch()
+        if key in [curses.KEY_UP, curses.KEY_DOWN, curses.KEY_LEFT, curses.KEY_RIGHT]:
+            if key == curses.KEY_UP and direction != Direction.Direction.SOUTH:
+                direction = Direction.Direction.NORTH
+            elif key == curses.KEY_DOWN and direction != Direction.Direction.NORTH:
+                direction = Direction.Direction.SOUTH
+            elif key == curses.KEY_LEFT and direction != Direction.Direction.EAST:
+                direction = Direction.Direction.WEST
+            elif key == curses.KEY_RIGHT and direction != Direction.Direction.WEST:
+                direction = Direction.Direction.EAST
+        elif key == ord('q'):
+            break
+
+        # update snake direction and move
+        game.snake.direction = direction
+        game.snake.move()
+
+        # Update snake body display
         for piece in game.snake.body:
             if piece == game.snake.body[0]:
                 game.board.set_square_value(piece, SquareValue.Square_value.HEAD) 
@@ -82,32 +85,29 @@ def main(stdscr):
                 
                 stdscr.addch(y + 10, x + 7, char) 
 
-        # Handle input
-        key = stdscr.getch()
-        if key in [curses.KEY_UP, curses.KEY_DOWN, curses.KEY_LEFT, curses.KEY_RIGHT]:
-            if key == curses.KEY_UP:
-                direction = Direction.Direction.NORTH
-            elif key == curses.KEY_DOWN:
-                direction = Direction.Direction.SOUTH
-            elif key == curses.KEY_LEFT:
-                direction = Direction.Direction.WEST
-            elif key == curses.KEY_RIGHT:
-                direction = Direction.Direction.EAST
-        elif key == ord('q'):
-            break
+        game.update_board()
 
-        # update snake
-        game.snake.direction = direction
-        game.snake.move()
+        # detect collision AFTER moving
+        try:
+            game.detect_collision()
+        except Exception as e:
+            if str(e) == "FoodEaten":
+                stdscr.addstr(8, 2, "Points: {}".format(game.points))
+            elif str(e) == "CannotEatYourself":
+                stdscr.clear()
+                stdscr.addstr(10, 10, "You cannot eat yourself! Current points: {}".format(game.points))
+                stdscr.refresh()
+                time.sleep(2)
+                return
+            elif str(e) == "GameOver":
+                stdscr.clear()
+                stdscr.addstr(10, 10, "Game Over! Current points: {}".format(game.points))
+                stdscr.refresh()
+                time.sleep(2)
+                return
+            else:
+                stdscr.addstr(8, 2, "Unexpected error: {}".format(str(e)))
 
-        # update empty squares
-        for x in range(game.board.width):
-            for y in range(game.board.height):
-                pos = Position.Position(x, y)
-                if pos not in game.snake.body and game.board.grid[x][y].value == SquareValue.Square_value.SNAKE:
-                    game.board.set_square_value(pos, SquareValue.Square_value.EMPTY)
-
-        
         # update terminal
         stdscr.refresh()
         time.sleep(0.1)
