@@ -6,11 +6,13 @@ import Position
 import Snake
 import SquareValue
 import Square
+import Gui
 
 
 import curses
 import time
 import random
+
 
 ascii_art = """
         _________              __            
@@ -108,9 +110,14 @@ def main(stdscr):
 
 if __name__ == "__main__":
 
-    curses.wrapper(main)
-
-
-
-
-
+    print("Welcome to Snake Game!")
+    print("Press 1 to play in terminal.")
+    print("Press 2 to play in GUI.")
+    choice = input("Enter your choice (1 or 2): ")
+    if choice == '1':
+        curses.wrapper(main)
+    elif choice == '2':
+        gui = Gui.Gui()
+        gui.run()
+    else:
+        print("Invalid choice. Exiting the game.")
