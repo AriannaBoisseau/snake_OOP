@@ -13,6 +13,14 @@ class Game:
         self.snake = Snake.Snake()
         self.apple = Apple.Apple(position=Position.Position(0,0))
         self.points = 0
+    
+    def check_duplicate_positions(self, positions):
+        seen = set()
+        for pos in positions:
+            if (pos.x, pos.y) in seen:
+                return True
+            seen.add((pos.x, pos.y))
+        return False
 
     def get_empty_squares(self):
         empty_squares: List[Position.Position] = []
@@ -59,7 +67,7 @@ class Game:
             # update empty squares
             self.update_board()
             raise Exception("FoodEaten")
-        elif self.snake.body[0] in self.snake.body[1:]:
+        elif self.check_duplicate_positions(self.snake.body):
             # raise gameOver event
             raise Exception("CannotEatYourself")
         elif (self.snake.body[0].x == 0 or self.snake.body[0].x == self.board.width - 1 or

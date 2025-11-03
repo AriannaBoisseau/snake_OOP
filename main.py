@@ -93,15 +93,9 @@ def main(stdscr):
         except Exception as e:
             if str(e) == "FoodEaten":
                 stdscr.addstr(8, 2, "Points: {}".format(game.points))
-            elif str(e) == "CannotEatYourself":
+            elif str(e) == "CannotEatYourself" or str(e) == "GameOver":
                 stdscr.clear()
-                stdscr.addstr(10, 10, "You cannot eat yourself! Current points: {}".format(game.points))
-                stdscr.refresh()
-                time.sleep(2)
-                return
-            elif str(e) == "GameOver":
-                stdscr.clear()
-                stdscr.addstr(10, 10, "Game Over! Current points: {}".format(game.points))
+                stdscr.addstr(10, 10, "Game over! Current points: {}".format(game.points))
                 stdscr.refresh()
                 time.sleep(2)
                 return
