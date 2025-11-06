@@ -1,18 +1,10 @@
-import Apple
-import Board
 import Direction
 import Game
-import Position
-import Snake
 import SquareValue
-import Square
 import Gui
-
 
 import curses
 import time
-import random
-
 
 ascii_art = """
          _________              __            
@@ -113,8 +105,8 @@ if __name__ == "__main__":
     print("Welcome to Snake Game!")
     print("Press 1 to play in terminal.")
     print("Press 2 to play in GUI.")
-    choice = input("Enter your choice (1 or 2): ")
-    # choice = '2'
+    # choice = input("Enter your choice (1 or 2): ")
+    choice = '2'
     if choice == '1':
         curses.wrapper(main)
     elif choice == '2':
