@@ -1,9 +1,10 @@
 from PyQt5.QtWidgets import QMainWindow, QLabel, QWidget, QVBoxLayout, QGridLayout
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QPixmap, QKeyEvent
+from PyQt5.QtCore import Qt, QTimer
 
 import SquareValue
 import Game
+import Direction
 
 class GameWindow(QMainWindow):
     def __init__(self):
@@ -31,6 +32,10 @@ class GameWindow(QMainWindow):
         self.game.run()
 
         self.draw_board(layout)
+
+        self.timer = QTimer()
+        self.timer.timeout.connect(lambda: self.game_loop(layout))
+        self.timer.start(100)
 
     def draw_board(self, layout):
 
@@ -60,3 +65,56 @@ class GameWindow(QMainWindow):
 
         board_widget.setLayout(board_layout)
         layout.addWidget(board_widget, alignment=Qt.AlignCenter)
+
+    def keyPressEvent(self, event):
+        direction = self.game.snake.direction
+        if isinstance(event, QKeyEvent):
+            key = event.key()
+            if key in [Qt.Key_Up, Qt.Key_Down, Qt.Key_Left, Qt.Key_Right]:
+                if key == Qt.Key_Up and direction != Direction.Direction.SOUTH:
+                    self.game.snake.direction = Direction.Direction.NORTH
+                elif key == Qt.Key_Down and direction != Direction.Direction.NORTH:
+                    self.game.snake.direction = Direction.Direction.SOUTH
+                elif key == Qt.Key_Left and direction != Direction.Direction.EAST:
+                    self.game.snake.direction = Direction.Direction.WEST
+                elif key == Qt.Key_Right and direction != Direction.Direction.WEST:
+                    self.game.snake.direction = Direction.Direction.EAST
+            elif key == Qt.Key_Q:
+                print("Quitting the game.")
+                self.close()
+
+    def update_board_display(self, layout):
+        # clear previous board display
+        while layout.count() > 1:
+            item = layout.takeAt(1)
+            widget = item.widget()
+            if widget is not None:
+                widget.deleteLater()
+
+        self.draw_board(layout)
+
+    def game_loop(self, layout):
+        self.game.snake.move()
+
+        # update snake body display
+        for piece in self.game.snake.body:
+            if piece == self.game.snake.body[0]:
+                self.game.board.set_square_value(piece, SquareValue.Square_value.HEAD) 
+            else:
+                self.game.board.set_square_value(piece, SquareValue.Square_value.SNAKE)
+
+        # update screen
+        self.update_board_display(layout)
+
+        self.game.update_board()
+
+        try:
+            self.game.detect_collision()
+        except Exception as e:
+            if str(e) == "FoodEaten":
+                print(f"Points: {self.game.points}")
+            elif str(e) == "CannotEatYourself" or str(e) == "GameOver":
+                self.timer.stop()
+                return
+            else:
+                print(f"Unexpected error: {str(e)}")
