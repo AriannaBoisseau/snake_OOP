@@ -15,12 +15,12 @@ import random
 
 
 ascii_art = """
-        _________              __            
+         _________              __            
         /   _____/ ____ _____  |  | __ ____   
         \_____  \ /    \\__  \ |  |/ // __ \  
         /        \   |  \/ __ \|    <\  ___/  
-        /_______  /___|  (____  /__|_ \\___  > 
-                \/     \/     \/     \/    \/  
+       /_______  /___|  (____  /__|_ \\___  > 
+               \/     \/     \/     \/    \/  
     """
 
 def main(stdscr):
@@ -114,6 +114,7 @@ if __name__ == "__main__":
     print("Press 1 to play in terminal.")
     print("Press 2 to play in GUI.")
     choice = input("Enter your choice (1 or 2): ")
+    # choice = '2'
     if choice == '1':
         curses.wrapper(main)
     elif choice == '2':

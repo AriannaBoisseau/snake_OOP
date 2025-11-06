@@ -1,11 +1,12 @@
-from PyQt5.QtWidgets import QApplication, QWidget
+from PyQt5.QtWidgets import QApplication
+
+from WelcomeWindow import WelcomeWindow
 
 class Gui:
     def run(self):
         app = QApplication([])
 
-        # create a Qt widget (a window) 
-        window = QWidget()
-        window.show()  
+        window = WelcomeWindow()
+        window.show()
 
-        app.exec()  
+        app.exec()
