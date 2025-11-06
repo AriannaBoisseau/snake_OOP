@@ -5,6 +5,7 @@ from PyQt5.QtCore import Qt, QTimer
 import SquareValue
 import Game
 import Direction
+from GameOverWindow import GameOverWindow 
 
 class GameWindow(QMainWindow):
     def __init__(self):
@@ -42,6 +43,10 @@ class GameWindow(QMainWindow):
         board_widget = QWidget()
         board_layout = QGridLayout()
         board_layout.setSpacing(0)
+
+        points_label = QLabel(f"Points: {self.game.points}")
+        points_label.setStyleSheet("color: white; font-size: 16px;")
+        layout.addWidget(points_label, alignment=Qt.AlignHCenter)
 
         for y in range(self.game.board.height):
             for x in range(self.game.board.width):
@@ -112,9 +117,11 @@ class GameWindow(QMainWindow):
             self.game.detect_collision()
         except Exception as e:
             if str(e) == "FoodEaten":
-                print(f"Points: {self.game.points}")
+                pass
             elif str(e) == "CannotEatYourself" or str(e) == "GameOver":
                 self.timer.stop()
-                return
+                self.hide()
+                self.game_over_window = GameOverWindow()
+                self.game_over_window.show()
             else:
                 print(f"Unexpected error: {str(e)}")
