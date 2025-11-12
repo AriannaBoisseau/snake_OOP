@@ -28,14 +28,14 @@ class WelcomeWindow(QMainWindow):
         # start game button
         button = QPushButton("Start Game!")
         button.setFixedSize(200, 100)
-        button.setStyleSheet("font-size: 24px;")
+        button.setStyleSheet("font-size: 24px; color: white; background-color: #333333;")
         layout.addWidget(button, alignment=(Qt.AlignHCenter | Qt.AlignCenter))
         button.clicked.connect(self.start_game)
 
         # credits button
         credits_button = QPushButton("Credits")
         credits_button.setFixedSize(200, 50)
-        credits_button.setStyleSheet("font-size: 18px;")
+        credits_button.setStyleSheet("font-size: 18px; color: white; background-color: #333333;")
         layout.addWidget(credits_button, alignment=(Qt.AlignHCenter | Qt.AlignCenter))
         credits_button.clicked.connect(self.show_credits)
 

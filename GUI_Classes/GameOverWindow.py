@@ -31,14 +31,14 @@ class GameOverWindow(QMainWindow):
         # restart game button
         button = QPushButton("Play Again!")
         button.setFixedSize(200, 100)
-        button.setStyleSheet("font-size: 24px;")
+        button.setStyleSheet("font-size: 24px; color: white; background-color: #333333;")
         layout.addWidget(button, alignment=(Qt.AlignHCenter | Qt.AlignCenter))
         button.clicked.connect(self.play_again)
 
         # quit button
         quit_button = QPushButton("Quit")
         quit_button.setFixedSize(200, 50)
-        quit_button.setStyleSheet("font-size: 18px;")
+        quit_button.setStyleSheet("font-size: 18px; color: white; background-color: #333333;")
         layout.addWidget(quit_button, alignment=(Qt.AlignHCenter | Qt.AlignCenter))
         quit_button.clicked.connect(self.close)
 
