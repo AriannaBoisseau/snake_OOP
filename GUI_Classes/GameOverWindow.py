@@ -9,7 +9,7 @@ class GameOverWindow(QMainWindow):
 
         self.setWindowTitle("Snake Game")
         self.setStyleSheet("background-color: black;")
-        self.setFixedSize(1200, 700)
+        self.setFixedSize(900, 900)
 
         # central widget
         central_widget = QWidget()

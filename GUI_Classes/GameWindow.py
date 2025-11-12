@@ -13,7 +13,7 @@ class GameWindow(QMainWindow):
 
         self.setWindowTitle("Snake Game")
         self.setStyleSheet("background-color: black;")
-        self.setFixedSize(1200, 700)
+        self.setFixedSize(900, 900)
 
         # central widget
         central_widget = QWidget()
@@ -52,7 +52,7 @@ class GameWindow(QMainWindow):
             for x in range(self.game.board.width):
                 square = self.game.board.grid[x][y]
                 label = QLabel()
-                label.setFixedSize(15, 15)
+                label.setFixedSize(20, 20)
                 label.setAlignment(Qt.AlignCenter)
                 
                 if square.value == SquareValue.Square_value.BORDER:
@@ -60,7 +60,10 @@ class GameWindow(QMainWindow):
                 elif square.value == SquareValue.Square_value.SNAKE:
                     label.setStyleSheet("background-color: green;")
                 elif square.value == SquareValue.Square_value.FOOD:
-                    label.setStyleSheet("background-color: red;")
+                    pixmap = QPixmap('assets/apple.png')
+                    scaled_pixmap = pixmap.scaled(18, 18, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+                    label.setPixmap(scaled_pixmap)
+                    label.setAlignment(Qt.AlignCenter)
                 elif square.value == SquareValue.Square_value.HEAD:
                     label.setStyleSheet("background-color: yellow;")
                 else:
