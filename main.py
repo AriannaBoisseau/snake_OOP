@@ -34,7 +34,8 @@ def main(stdscr):
 
         stdscr.border(0)
         stdscr.addstr(0, 2, ascii_art)
-        stdscr.addstr(0, 2, '~ Welcome to Snake ~ Press "q" to quit the game ~')
+        stdscr.addstr(0, 2, '~ Welcome to Snake Game ~')
+        stdscr.addstr(7, 2, "Use arrow keys to move the snake ~ Press \"q\" to quit the game")
         stdscr.addstr(8, 2, "Points: {}".format(game.points))
 
         # Handle input
@@ -67,7 +68,7 @@ def main(stdscr):
             for y in range(game.board.height):
                 square = game.board.grid[x][y]
                 if square.value == SquareValue.Square_value.BORDER:
-                    char = '█'
+                    char = '#'
                 elif square.value == SquareValue.Square_value.SNAKE:
                     char = 'S'
                 elif square.value == SquareValue.Square_value.FOOD:
@@ -77,7 +78,7 @@ def main(stdscr):
                 else:
                     char = '.'
                 
-                stdscr.addch(y + 10, x + 7, char) 
+                stdscr.addch(y + 10, (x * 2) + 7, char) 
 
         game.update_board()
 
