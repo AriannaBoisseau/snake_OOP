@@ -1,24 +1,18 @@
-import Apple
-import Board
 import Direction
 import Game
-import Position
-import Snake
 import SquareValue
-import Square
-
+import GUI_Classes.Gui as Gui
 
 import curses
 import time
-import random
 
 ascii_art = """
-        _________              __            
+         _________              __            
         /   _____/ ____ _____  |  | __ ____   
         \_____  \ /    \\__  \ |  |/ // __ \  
         /        \   |  \/ __ \|    <\  ___/  
-        /_______  /___|  (____  /__|_ \\___  > 
-                \/     \/     \/     \/    \/  
+       /_______  /___|  (____  /__|_ \\___  > 
+               \/     \/     \/     \/    \/  
     """
 
 def main(stdscr):
@@ -40,7 +34,8 @@ def main(stdscr):
 
         stdscr.border(0)
         stdscr.addstr(0, 2, ascii_art)
-        stdscr.addstr(0, 2, '~ Welcome to Snake ~ Press "q" to quit the game ~')
+        stdscr.addstr(0, 2, '~ Welcome to Snake Game ~')
+        stdscr.addstr(7, 2, "Use arrow keys to move the snake ~ Press \"q\" to quit the game")
         stdscr.addstr(8, 2, "Points: {}".format(game.points))
 
         # Handle input
@@ -73,7 +68,7 @@ def main(stdscr):
             for y in range(game.board.height):
                 square = game.board.grid[x][y]
                 if square.value == SquareValue.Square_value.BORDER:
-                    char = '█'
+                    char = '#'
                 elif square.value == SquareValue.Square_value.SNAKE:
                     char = 'S'
                 elif square.value == SquareValue.Square_value.FOOD:
@@ -83,7 +78,7 @@ def main(stdscr):
                 else:
                     char = '.'
                 
-                stdscr.addch(y + 10, x + 7, char) 
+                stdscr.addch(y + 10, (x * 2) + 7, char) 
 
         game.update_board()
 
@@ -96,9 +91,17 @@ def main(stdscr):
             elif str(e) == "CannotEatYourself" or str(e) == "GameOver":
                 stdscr.clear()
                 stdscr.addstr(10, 10, "Game over! Current points: {}".format(game.points))
-                stdscr.refresh()
-                time.sleep(2)
-                return
+                stdscr.addstr(12, 10, "Press any key to play again...")
+                stdscr.addstr(14, 10, "Press 'q' to quit.")
+                stdscr.nodelay(False)
+                key = stdscr.getch()
+                if key == ord('q'):
+                    return
+                else:
+                    # restarting game
+                    main(stdscr)
+                    return
+
             else:
                 stdscr.addstr(8, 2, "Unexpected error: {}".format(str(e)))
 
@@ -108,9 +111,15 @@ def main(stdscr):
 
 if __name__ == "__main__":
 
-    curses.wrapper(main)
-
-
-
-
-
+    print("Welcome to Snake Game!")
+    print("Press 1 to play in terminal.")
+    print("Press 2 to play in GUI.")
+    choice = input("Enter your choice (1 or 2): ")
+    # choice = '2'
+    if choice == '1':
+        curses.wrapper(main)
+    elif choice == '2':
+        gui = Gui.Gui()
+        gui.run()
+    else:
+        print("Invalid choice. Exiting the game.")
