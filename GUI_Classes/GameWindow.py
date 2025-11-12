@@ -44,6 +44,10 @@ class GameWindow(QMainWindow):
         board_layout = QGridLayout()
         board_layout.setSpacing(0)
 
+        commands_label = QLabel("Use arrow keys to move the snake ~ Press \"q\" to quit the game")
+        commands_label.setStyleSheet("color: white; font-size: 16px;")
+        layout.addWidget(commands_label, alignment=Qt.AlignHCenter)
+
         points_label = QLabel(f"Points: {self.game.points}")
         points_label.setStyleSheet("color: white; font-size: 16px;")
         layout.addWidget(points_label, alignment=Qt.AlignHCenter)
@@ -56,7 +60,10 @@ class GameWindow(QMainWindow):
                 label.setAlignment(Qt.AlignCenter)
                 
                 if square.value == SquareValue.Square_value.BORDER:
-                    label.setStyleSheet("background-color: white;")
+                    pixmap = QPixmap('assets/grass.png')
+                    scaled_pixmap = pixmap.scaled(18, 18, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+                    label.setPixmap(scaled_pixmap)
+                    label.setAlignment(Qt.AlignCenter)
                 elif square.value == SquareValue.Square_value.SNAKE:
                     label.setStyleSheet("background-color: green;")
                 elif square.value == SquareValue.Square_value.FOOD:
