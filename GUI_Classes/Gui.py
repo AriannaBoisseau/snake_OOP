@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QApplication
 
-from WelcomeWindow import WelcomeWindow
+from GUI_Classes.WelcomeWindow import WelcomeWindow
 
 class Gui:
     def run(self):

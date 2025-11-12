@@ -20,3 +20,8 @@ class Snake:
         
         self.body.insert(0, new_head)
         self.body.pop()
+
+    def reset(self):
+        self.lenght = 5
+        self.body = [Position.Position(5, 5), Position.Position(5, 4), Position.Position(5, 3), Position.Position(5, 2), Position.Position(5, 1)]
+        self.direction = Direction.Direction.SOUTH

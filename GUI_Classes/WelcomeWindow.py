@@ -1,8 +1,11 @@
 from PyQt5.QtWidgets import QMainWindow, QPushButton, QLabel, QWidget, QVBoxLayout
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
+import webbrowser
 
-class GameOverWindow(QMainWindow):
+from GUI_Classes.GameWindow import GameWindow
+
+class WelcomeWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
@@ -22,25 +25,27 @@ class GameOverWindow(QMainWindow):
         label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
         layout.addWidget(label)
 
-        # text label
-        text_label = QLabel("Game Over! Thanks for playing.", self)
-        text_label.setStyleSheet("color: white; font-size: 24px;")
-        text_label.setAlignment(Qt.AlignHCenter | Qt.AlignCenter)
-        layout.addWidget(text_label)
-
-        # restart game button
-        button = QPushButton("Play Again!")
+        # start game button
+        button = QPushButton("Start Game!")
         button.setFixedSize(200, 100)
         button.setStyleSheet("font-size: 24px;")
         layout.addWidget(button, alignment=(Qt.AlignHCenter | Qt.AlignCenter))
-        button.clicked.connect(self.play_again)
+        button.clicked.connect(self.start_game)
+
+        # credits button
+        credits_button = QPushButton("Credits")
+        credits_button.setFixedSize(200, 50)
+        credits_button.setStyleSheet("font-size: 18px;")
+        layout.addWidget(credits_button, alignment=(Qt.AlignHCenter | Qt.AlignCenter))
+        credits_button.clicked.connect(self.show_credits)
 
         central_widget.setLayout(layout)
         self.setCentralWidget(central_widget)
 
-    def play_again(self):
-        # i have imported here in order to not create a circular import
-        from GameWindow import GameWindow 
-        self.close()
+    def start_game(self):
+        self.hide()
         self.game_window = GameWindow()
         self.game_window.show()
+
+    def show_credits(self):
+        webbrowser.open('https://github.com/AriannaBoisseau/snake_OOP')

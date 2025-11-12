@@ -1,7 +1,7 @@
 import Direction
 import Game
 import SquareValue
-import Gui
+import GUI_Classes.Gui as Gui
 
 import curses
 import time
@@ -90,9 +90,17 @@ def main(stdscr):
             elif str(e) == "CannotEatYourself" or str(e) == "GameOver":
                 stdscr.clear()
                 stdscr.addstr(10, 10, "Game over! Current points: {}".format(game.points))
-                stdscr.refresh()
-                time.sleep(2)
-                return
+                stdscr.addstr(12, 10, "Press any key to play again...")
+                stdscr.addstr(14, 10, "Press 'q' to quit.")
+                stdscr.nodelay(False)
+                key = stdscr.getch()
+                if key == ord('q'):
+                    return
+                else:
+                    # restarting game
+                    main(stdscr)
+                    return
+
             else:
                 stdscr.addstr(8, 2, "Unexpected error: {}".format(str(e)))
 
@@ -105,8 +113,8 @@ if __name__ == "__main__":
     print("Welcome to Snake Game!")
     print("Press 1 to play in terminal.")
     print("Press 2 to play in GUI.")
-    # choice = input("Enter your choice (1 or 2): ")
-    choice = '2'
+    choice = input("Enter your choice (1 or 2): ")
+    # choice = '2'
     if choice == '1':
         curses.wrapper(main)
     elif choice == '2':

@@ -1,11 +1,8 @@
 from PyQt5.QtWidgets import QMainWindow, QPushButton, QLabel, QWidget, QVBoxLayout
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
-import webbrowser
 
-from GameWindow import GameWindow
-
-class WelcomeWindow(QMainWindow):
+class GameOverWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
@@ -25,27 +22,32 @@ class WelcomeWindow(QMainWindow):
         label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
         layout.addWidget(label)
 
-        # start game button
-        button = QPushButton("Start Game!")
+        # text label
+        text_label = QLabel("Game Over! Thanks for playing.", self)
+        text_label.setStyleSheet("color: white; font-size: 24px;")
+        text_label.setAlignment(Qt.AlignHCenter | Qt.AlignCenter)
+        layout.addWidget(text_label)
+
+        # restart game button
+        button = QPushButton("Play Again!")
         button.setFixedSize(200, 100)
         button.setStyleSheet("font-size: 24px;")
         layout.addWidget(button, alignment=(Qt.AlignHCenter | Qt.AlignCenter))
-        button.clicked.connect(self.start_game)
+        button.clicked.connect(self.play_again)
 
-        # credits button
-        credits_button = QPushButton("Credits")
-        credits_button.setFixedSize(200, 50)
-        credits_button.setStyleSheet("font-size: 18px;")
-        layout.addWidget(credits_button, alignment=(Qt.AlignHCenter | Qt.AlignCenter))
-        credits_button.clicked.connect(self.show_credits)
+        # quit button
+        quit_button = QPushButton("Quit")
+        quit_button.setFixedSize(200, 50)
+        quit_button.setStyleSheet("font-size: 18px;")
+        layout.addWidget(quit_button, alignment=(Qt.AlignHCenter | Qt.AlignCenter))
+        quit_button.clicked.connect(self.close)
 
         central_widget.setLayout(layout)
         self.setCentralWidget(central_widget)
 
-    def start_game(self):
-        self.hide()
+    def play_again(self):
+        # i have imported here in order to not create a circular import
+        from GUI_Classes.GameWindow import GameWindow 
+        self.close()
         self.game_window = GameWindow()
         self.game_window.show()
-
-    def show_credits(self):
-        webbrowser.open('https://github.com/AriannaBoisseau/snake_OOP')

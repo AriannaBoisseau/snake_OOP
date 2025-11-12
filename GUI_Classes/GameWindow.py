@@ -5,7 +5,7 @@ from PyQt5.QtCore import Qt, QTimer
 import SquareValue
 import Game
 import Direction
-from GameOverWindow import GameOverWindow 
+from GUI_Classes.GameOverWindow import GameOverWindow 
 
 class GameWindow(QMainWindow):
     def __init__(self):

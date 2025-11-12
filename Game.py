@@ -14,6 +14,11 @@ class Game:
         self.apple = Apple.Apple(position=Position.Position(0,0))
         self.points = 0
     
+    def reset(self):
+        self.board.clear()
+        self.snake.reset()
+        self.points = 0
+
     def check_duplicate_positions(self, positions):
         seen = set()
         for pos in positions:
@@ -32,6 +37,8 @@ class Game:
         return empty_squares
 
     def run(self):
+        self.reset()
+
         for piece in self.snake.body:
             if piece == self.snake.body[0]:
                 self.board.set_square_value(piece, SquareValue.Square_value.HEAD) 
