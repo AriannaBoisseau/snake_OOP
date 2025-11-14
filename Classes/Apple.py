@@ -1,4 +1,4 @@
-import Position
+import Classes.Position as Position
 
 class Apple:
     def __init__(self, position: Position.Position, points = 1, is_eatean = False):

@@ -1,8 +1,8 @@
-import Board
-import Snake
-import Apple
-import Position
-import SquareValue
+import Classes.Board as Board
+import Classes.Snake as Snake
+import Classes.Apple as Apple
+import Classes.Position as Position
+import Classes.SquareValue as SquareValue
 
 from typing import List
 import random

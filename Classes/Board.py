@@ -1,7 +1,7 @@
 from typing import List
-import Square
-import Position
-import SquareValue
+import Classes.Square as Square
+import Classes.Position as Position
+import Classes.SquareValue as SquareValue
 
 class Board:
     def __init__(self, width= 40, height = 40):

@@ -1,6 +1,6 @@
-import Direction
-import Game
-import SquareValue
+import Classes.Direction as Direction
+import Classes.Game as Game
+import Classes.SquareValue as SquareValue
 import GUI_Classes.Gui as Gui
 
 import curses

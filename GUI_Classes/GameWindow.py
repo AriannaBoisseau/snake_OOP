@@ -2,9 +2,9 @@ from PyQt5.QtWidgets import QMainWindow, QLabel, QWidget, QVBoxLayout, QGridLayo
 from PyQt5.QtGui import QPixmap, QKeyEvent
 from PyQt5.QtCore import Qt, QTimer
 
-import SquareValue
-import Game
-import Direction
+import Classes.SquareValue as SquareValue
+import Classes.Game as Game
+import Classes.Direction as Direction
 from GUI_Classes.GameOverWindow import GameOverWindow 
 
 class GameWindow(QMainWindow):

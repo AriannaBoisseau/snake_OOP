@@ -40,7 +40,17 @@ Then follow the on-screen instructions to choose between terminal or GUI mode.
 
 ## Project Structure
 - `main.py`: Entry point of the application.
+- `Classes/`: Contains all the core classes for the game logic.
 - `GUI_Classes/`: Contains all GUI-related classes and windows.
 - `assets/`: Contains images and other assets used in the game.
 - `diagrams/`: Contains UML diagrams representing the class structure.
+- `pictures/`: Contains screenshots of the game in action.
 - `requirements.txt`: Lists all the dependencies for the project.
+
+## Screenshots
+
+![Terminal Mode](pictures/tui.png)
+*Terminal mode of the Snake game.*
+
+![GUI Mode](pictures/gui.png)
+*Graphical User Interface (GUI) mode of the Snake game.*
