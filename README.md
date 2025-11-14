@@ -49,8 +49,23 @@ Then follow the on-screen instructions to choose between terminal or GUI mode.
 
 ## Screenshots
 
+### Terminal mode
+
 ![Terminal Mode](pictures/tui.png)
-*Terminal mode of the Snake game.*
+
+### GUI mode
 
 ![GUI Mode](pictures/gui.png)
-*Graphical User Interface (GUI) mode of the Snake game.*
+
+## UML Diagrams
+
+### Class Diagram
+
+![Class Diagram](diagrams/final/snake_class_diagram_final.png)
+
+### Sequence Diagram
+
+![Sequence Diagram](diagrams/initial/snake_sequence_diagram.png)
+
+### Use Case Diagram
+![Use Case Diagram](diagrams/initial/snake_use_case_diagram.png)
