@@ -117,7 +117,11 @@ if __name__ == "__main__":
     choice = input("Enter your choice (1 or 2): ")
     # choice = '2'
     if choice == '1':
-        curses.wrapper(main)
+        try:
+            curses.wrapper(main)
+        except Exception as e:
+            print('The terminal window is too small to run the game.')
+            print('Put the terminal window in full screen or make the font smaller and try again!')
     elif choice == '2':
         gui = Gui.Gui()
         gui.run()
