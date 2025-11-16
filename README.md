@@ -5,6 +5,7 @@ Project developed as part of a course on Object Oriented Programming (OOP) at EN
 ## Overview
 This project implements the classic Snake game using Object Oriented Programming principles.
 The game can be played on the terminal as well as through a graphical user interface (GUI) built with PyQt5.
+Developed in Python 3.10.12. 
 
 ## Requirements
 The `requirements.txt` file contains all the dependencies needed for the project.
